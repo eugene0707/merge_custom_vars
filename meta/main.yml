@@ -1,9 +1,9 @@
 galaxy_info:
   author: Evgeniy Kondrashov
-  description: Load vars files with customisable precedence and deep merge hashes within.
+  description: Load vars files with customizable precedence and deep merge hashes within.
   company: None
 
-  license: license (GPLv2, CC-BY, etc)
+  license: GPLv2
 
   min_ansible_version: 2.0
 

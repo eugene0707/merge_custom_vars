@@ -1,7 +1,7 @@
 merge_custom_vars
 =================
 
-Load vars files with customisable precedence and deep merge hashes within. 
+Load vars files with customizable precedence and deep merge hashes within. 
 By default vars files loaded from rpi_vars folder in roles included at playbook, overriding by rpi_vars from playbook dir and highest priority have inventory rpi_vars.
 You can set your own list of vars files/folders to merge and their precedence.
 

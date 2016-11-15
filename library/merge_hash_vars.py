@@ -1,3 +1,31 @@
+#!/usr/bin/python
+
+# (c) 2016, Evgeniy Kondrashov <eugene0707@gmail.com>
+#
+# This file is part of merge_custom_vars,
+#
+# merge_custom_vars is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# merge_custom_vars is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with merge_custom_vars.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+DOCUMENTATION = '''
+---
+module: merge_hash_vars
+short_description: Load vars files (yaml, yml, json), deep merge hashes and save to temp folder
+description:
+author: "Evgeniy Kondrashov"
+'''
+
 from ansible.utils.vars import *
 from ansible.parsing.dataloader import DataLoader
 import yaml
