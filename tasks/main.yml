@@ -1,0 +1,29 @@
+- stat: path="{{ playbook_dir }}/{{ rpi_dir }}"
+  register: playbook_global_vars
+
+- stat: path="{{ inventory_dir }}/{{ rpi_dir }}"
+  register: inventory_global_vars
+
+- include: roles_rpi_vars.yml item={{ item }}
+  with_items: "{{ role_names }}"
+
+- set_fact:
+    rpi_playbook_dirs: "{{ [playbook_global_vars.stat.path] }}"
+  when: playbook_global_vars.stat.exists == True
+
+- set_fact:
+    rpi_inventory_dirs: "{{ [inventory_global_vars.stat.path] }}"
+  when: inventory_global_vars.stat.exists == True
+
+- set_fact:
+    rpi_files: "{{ lookup('flattened', rpi_files) }}"
+
+- block:
+  - name: merge vars from files
+    merge_hash_vars: files={{ rpi_files }}
+
+  - name: load merged hash from temp file
+    include_vars: "{{ merged_hash_file }}"
+  always:
+  - name: delete temp file
+    file: path={{ merged_hash_file }} state=absent

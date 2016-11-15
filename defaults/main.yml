@@ -1,0 +1,11 @@
+---
+rpi_dir: rpi_vars
+
+rpi_role_dirs: []
+rpi_playbook_dirs: []
+rpi_inventory_dirs: []
+
+rpi_files:
+  - "{{ rpi_role_dirs }}"
+  - "{{ rpi_playbook_dirs }}"
+  - "{{ rpi_inventory_dirs }}"

@@ -1,0 +1,15 @@
+- set_fact: 'role_item={{ item }}'
+
+- stat: path="{{ playbook_dir }}/roles/{{ role_item }}/{{ rpi_dir }}"
+  register: local_role_dir
+
+- stat: path="{{ role_path }}/../{{ role_item }}/{{ rpi_dir }}"
+  register: shared_role_dir
+
+- set_fact:
+    rpi_role_dirs: "{{ rpi_role_dirs + [shared_role_dir.stat.path] }}"
+  when: shared_role_dir.stat.exists == True
+
+- set_fact:
+    rpi_role_dirs: "{{ rpi_role_dirs + [local_role_dir.stat.path] }}"
+  when: local_role_dir.stat.exists == True
