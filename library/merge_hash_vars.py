@@ -61,7 +61,7 @@ def build_files_list(loader, paths):
             else:
                 continue
         else:
-            results.extend(map((lambda fn: os.path.join(filename, fn)), loader.list_directory(filename)))
+            results.extend(build_files_list(loader, map((lambda fn: os.path.join(filename, fn)), loader.list_directory(filename))))
 
     return results
 
