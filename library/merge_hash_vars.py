@@ -42,7 +42,8 @@ def merge_files(files2include):
 
     tempfd, merged_hash_file = tempfile.mkstemp(suffix='.yml')
     yaml.dump(results, open(merged_hash_file, 'w'), default_flow_style=False)
-    os.chown(merged_hash_file, int(os.environ.get('SUDO_UID')), int(os.environ.get('SUDO_GID')))
+    if os.environ.get('SUDO_UID'):
+        os.chown(merged_hash_file, int(os.environ.get('SUDO_UID')), int(os.environ.get('SUDO_GID')))
 
     results.update(merged_hash_file = merged_hash_file)
 

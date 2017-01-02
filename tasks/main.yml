@@ -1,29 +1,47 @@
 - stat: path="{{ playbook_dir }}/{{ rpi_dir }}"
   register: playbook_global_vars
+  delegate_to: 127.0.0.1
+  become: no
+
 
 - stat: path="{{ inventory_dir }}/{{ rpi_dir }}"
   register: inventory_global_vars
+  delegate_to: 127.0.0.1
+  become: no
 
-- include: roles_rpi_vars.yml item={{ item }}
+- include: roles_rpi_vars.yml item={{ role_item }}
   with_items: "{{ role_names }}"
+  loop_control:
+    loop_var: role_item
+  become: no
 
 - set_fact:
     rpi_playbook_dirs: "{{ [playbook_global_vars.stat.path] }}"
   when: playbook_global_vars.stat.exists == True
+  become: no
 
 - set_fact:
     rpi_inventory_dirs: "{{ [inventory_global_vars.stat.path] }}"
   when: inventory_global_vars.stat.exists == True
+  become: no
 
 - set_fact:
     rpi_files: "{{ lookup('flattened', rpi_files) }}"
+  become: no
 
 - block:
   - name: merge vars from files
     merge_hash_vars: files={{ rpi_files }}
+    delegate_to: 127.0.0.1
+    become: no
 
   - name: load merged hash from temp file
     include_vars: "{{ merged_hash_file }}"
+    no_log: True
+    delegate_to: 127.0.0.1
+    become: no
   always:
   - name: delete temp file
     file: path={{ merged_hash_file }} state=absent
+    delegate_to: 127.0.0.1
+    become: no
