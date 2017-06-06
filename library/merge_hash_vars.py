@@ -28,6 +28,7 @@ author: "Evgeniy Kondrashov"
 
 from ansible.utils.vars import *
 from ansible.parsing.dataloader import DataLoader
+from ansible.parsing.yaml.dumper import AnsibleDumper
 import yaml
 import tempfile
 
@@ -41,7 +42,7 @@ def merge_files(files2include):
         results = merge_hash(results, raw_hash)
 
     tempfd, merged_hash_file = tempfile.mkstemp(suffix='.yml')
-    yaml.dump(results, open(merged_hash_file, 'w'), default_flow_style=False)
+    yaml.dump(results, open(merged_hash_file, 'w'), Dumper=AnsibleDumper, default_flow_style=False)
     if os.environ.get('SUDO_UID'):
         os.chown(merged_hash_file, int(os.environ.get('SUDO_UID')), int(os.environ.get('SUDO_GID')))
 
